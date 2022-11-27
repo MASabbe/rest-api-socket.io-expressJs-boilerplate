@@ -1,22 +1,23 @@
-import {createServer} from 'http';
-import {port, env, appName, appVersion} from './config/vars.mjs';
 import logger from './config/logger.mjs';
-import mysql from './config/mysql.mjs';
-import app from './config/express.mjs';
-const httpServer = createServer(app);
-httpServer.listen(port, async () => {
-  try {
-    logger.info(`${appName.toUpperCase()} v${appVersion} socket server started on port ${port} (${env})`);
-    await Promise.all([
-      // open mysql connection
-      mysql.connect(),
-    ]);
-  } catch (e) {
-    logger.error(e.stack);
-  }
+import {appName, appVersion, env, port} from './config/vars.mjs';
+import './config/mysql.mjs';
+import './config/redis.mjs';
+// import './config/mongoose.mjs';
+import httpServer from './app.mjs';
+const server = httpServer.listen(port, logger.info(`${appName.toUpperCase()} v${appVersion} socket server started on port ${port} (${env})`));
+const exitHandler = () => {
+  server.close(() => {
+    logger.info('Server closed');
+    process.exit(1);
+  });
+};
+const unexpectedErrorHandler = (error) => {
+  logger.error(error);
+  exitHandler();
+};
+process.on('uncaughtException', unexpectedErrorHandler);
+process.on('unhandledRejection', unexpectedErrorHandler);
+process.on('SIGTERM', () => {
+  logger.info('SIGTERM received');
+  server.close();
 });
-/**
- * Exports express
- * @public
- */
-export default httpServer;

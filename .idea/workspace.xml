@@ -32,7 +32,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="17.4.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="17.0.45" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/socket/errors" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
@@ -40,9 +40,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/socket/errors" />
       <recent name="$PROJECT_DIR$/public/views" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/config" />
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/public/views" />
       <recent name="$PROJECT_DIR$/public/docs" />
@@ -58,7 +60,9 @@
       <option name="presentableId" value="Default" />
       <updated>1669226213007</updated>
       <workItem from="1669226216272" duration="12233000" />
-      <workItem from="1669294908411" duration="18625000" />
+      <workItem from="1669294908411" duration="20203000" />
+      <workItem from="1669380849671" duration="29198000" />
+      <workItem from="1669562937708" duration="9408000" />
     </task>
     <servers />
   </component>

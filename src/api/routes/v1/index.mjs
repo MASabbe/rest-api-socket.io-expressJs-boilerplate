@@ -1,4 +1,3 @@
-import path from 'path';
 import express from 'express';
 import authRoutes from './auth.route.mjs';
 import userRoutes from './user.route.mjs';

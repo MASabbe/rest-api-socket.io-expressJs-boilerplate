@@ -7,7 +7,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import passport from 'passport';
 import favicon from 'serve-favicon';
-import path from 'path';
 import {logs} from './vars.mjs';
 import strategies from './passport.mjs';
 import error from '../api/middlewares/error.mjs';
