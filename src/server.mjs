@@ -12,18 +12,9 @@ const io = new Server(httpServer, {
 const wrap = middleware => (socket,next) => middleware(socket.request,{},next);
 io.use(wrap(passport.initialize()));
 io.use((socket, next) => auth(socket.handshake, next));
+io.use((socket, next) => authorize(socket.handshake, next));
 io.on("connection", (socket) => {
-  socket.use(([event,data,callback], next) => {
-    try {
-      if (typeof data !== "object"){
-        return next("Error data");
-      }
-      next();
-    }catch (e) {
-      next(e)
-    }
-  });
-  // event(socket, next);
+  event(io,socket);
   socket.on("disconnect", (reason) => {
     if (reason)
       logger.info(reason);

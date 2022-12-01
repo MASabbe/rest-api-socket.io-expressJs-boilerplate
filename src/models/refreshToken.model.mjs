@@ -1,19 +1,19 @@
 import httpStatus from 'http-status';
 import {DateTime} from 'luxon';
 import crypto from 'crypto';
-import mysql from '../../config/mysql.mjs';
-import MysqlHelper from '../../helper/mysql.helper.mjs';
-import APIError from '../errors/api-error.mjs';
+import mysql from '../config/mysql.mjs';
+import MysqlHelper from '../helper/mysql.helper.mjs';
+import APIError from '../api/errors/api-error.mjs';
 const pool = mysql.pool;
 const mysqlHelper = new MysqlHelper(pool);
-const table = 'tbl_admin_reset_token';
-const generate = async (user) => {
+const table = 'tbl_admin_refresh_token';
+const generate = async () => {
   const now = DateTime.utc();
   const userId = user.id;
-  const email = user.email;
+  const username = user.username;
   const token = `${userId}.${crypto.randomBytes(40).toString('hex')}`;
-  const expires = DateTime.utc().plus({hours: 2});
-  const save = await mysqlHelper.insertData(table, `token=${pool.escape(token)},id_user=${userId},email=${pool.escape(email)},expires=${pool.escape(expires.toISO({includeOffset: false}))},date_created=${pool.escape(now.toISO({includeOffset: false}))}`);
+  const expires = now.plus({day: 30});
+  const save = await mysqlHelper.insertData(table, `token=${pool.escape(token)},id_user=${userId},username=${pool.escape(username)},expires=${pool.escape(expires.toISO({includeOffset: false}))},date_created=${pool.escape(now.toISO({includeOffset: false}))}`);
   return {
     id: save.insertId,
     token: token,

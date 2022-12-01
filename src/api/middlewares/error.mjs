@@ -32,7 +32,7 @@ const converter = function(err, req, res, next) {
       status: err.status,
       stack: err.details,
     });
-  } else if (!(err instanceof APIError)) {
+  } else if (!err instanceof APIError) {
     convertedError = new APIError({
       message: err.message,
       status: err.status,

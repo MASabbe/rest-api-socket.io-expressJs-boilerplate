@@ -1,6 +1,6 @@
 import httpStatus from 'http-status';
 import lodas from 'lodash';
-import adminModel from '../models/admin.model.mjs';
+import adminModel from '../../models/admin.model.mjs';
 const {omit} = lodas;
 /**
  * Load user and append to req.

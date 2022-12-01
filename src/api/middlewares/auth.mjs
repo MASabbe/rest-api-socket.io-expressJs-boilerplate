@@ -1,6 +1,6 @@
 import httpStatus from 'http-status';
 import passport from 'passport';
-import adminModel from '../models/admin.model.mjs';
+import adminModel from '../../models/admin.model.mjs';
 import APIError from '../errors/api-error.mjs';
 const handleJWT = (req, res, next, roles) => async (err, user, info) => {
   const error = err || info;

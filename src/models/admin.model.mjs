@@ -2,10 +2,13 @@ import httpStatus from 'http-status';
 import bcrypt from 'bcryptjs';
 import {DateTime} from 'luxon';
 import jwt from 'jwt-simple';
-import {jwtSecret, jwtExpirationInterval} from '../../config/vars.mjs';
-import mysql from '../../config/mysql.mjs';
-import MysqlHelper from '../../helper/mysql.helper.mjs';
-import APIError from '../errors/api-error.mjs';
+import {jwtSecret, jwtExpirationInterval} from '../config/vars.mjs';
+import mysql from '../config/mysql.mjs';
+import MysqlHelper from '../helper/mysql.helper.mjs';
+import APIError from '../api/errors/api-error.mjs';
+const pool = mysql.pool;
+const mysqlHelper = new MysqlHelper(pool);
+const table = 'tbl_admin';
 function token(id) {
   const payload = {
     exp: DateTime.utc().plus({minutes: jwtExpirationInterval}).toMillis(),
@@ -14,9 +17,18 @@ function token(id) {
   };
   return jwt.encode(payload, jwtSecret);
 }
-const pool = mysql.pool;
-const mysqlHelper = new MysqlHelper(pool);
-const table = 'tbl_admin';
+async function findOneUser(username){
+  const err = {
+    status: httpStatus.UNAUTHORIZED,
+    isPublic: true,
+  };
+  const check = await mysqlHelper.getOneData(table, 'id,email,username,pass,banned,otp,role,date_created', `username=${pool.escape(username)}`, 'id ASC');
+  if (check.length <= 0) {
+    err.message = 'Invalid username. User not found';
+    throw new APIError(err);
+  }
+  return check;
+}
 /**
  * User Roles
  */
@@ -81,11 +93,7 @@ const login = async (userData) => {
     status: httpStatus.UNAUTHORIZED,
     isPublic: true,
   };
-  const check = await mysqlHelper.getOneData(table, 'id,email,username,pass,banned,otp,role,date_created', `username=${pool.escape(username)}`, 'id ASC');
-  if (check.length <= 0) {
-    err.message = 'Invalid username. User not found';
-    throw new APIError(err);
-  }
+  const check = await findOneUser(username);
   const id = check.data.id;
   const usernameDb = check.data.username;
   const passwordDb = check.data.pass;
@@ -139,11 +147,7 @@ const findAndGenerateToken = async (data) => {
     err.message = 'Invalid refresh token';
     throw new APIError(err);
   }
-  const check = await mysqlHelper.getOneData(table, 'id,email,username,pass,banned,otp,role,date_created', `username=${pool.escape(username)}`, 'id ASC');
-  if (check.length <= 0) {
-    err.message = 'Invalid username. User not found';
-    throw new APIError(err);
-  }
+  const check = await findOneUser(username);
   const id = check.data.id;
   const email = check.data.email;
   const usernameDb = check.data.username;
