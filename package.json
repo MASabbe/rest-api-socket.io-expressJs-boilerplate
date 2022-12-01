@@ -26,7 +26,7 @@
     "lint:fix": "eslint ./src/** --ext .mjs --fix",
     "docs": "apidoc -i ./src/ -o ./public/docs/",
     "postdocs": "open-cli ./public/docs/index.html",
-    "dev": "babel-node --env-name development ./src/index.mjs",
+    "dev": "nodemon babel-node ./src/index.mjs",
     "clean": "rm -rf dist",
     "build": "yarn run clean && babel ./src --out-dir dist --copy-files",
     "prod": "pm2 start ./ecosystem.config.js"

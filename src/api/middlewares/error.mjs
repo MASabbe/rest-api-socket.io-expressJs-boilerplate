@@ -6,7 +6,7 @@ import {env} from '../../config/vars.mjs';
  * Error handler. Send stacktrace only during development
  * @public
  */
-const handler = function(err, req, res) {
+const handler = (err, req, res, next) => {
   const response = {
     code: err.status,
     message: err.message || httpStatus[err.status],
@@ -15,8 +15,6 @@ const handler = function(err, req, res) {
   };
   if (env === 'production') {
     delete response.stack;
-  } else {
-    console.error(response);
   }
   res.status(err.status);
   res.json(response);
@@ -25,7 +23,7 @@ const handler = function(err, req, res) {
  * If error is not an instanceOf APIError, convert it.
  * @public
  */
-const converter = function(err, req, res) {
+const converter = function(err, req, res, next) {
   let convertedError = err;
   if (err instanceof expressValidation.ValidationError) {
     convertedError = new APIError({
@@ -47,12 +45,12 @@ const converter = function(err, req, res) {
  * Catch 404 and forward to error handler
  * @public
  */
-const notFound = function(req, res) {
+const notFound = function(req, res, next) {
   const err = new APIError({
     message: 'Not found',
     status: httpStatus.NOT_FOUND,
   });
-  return handler(err, req, res);
+  return handler(err,req, res);
 };
 export default {
   handler,
