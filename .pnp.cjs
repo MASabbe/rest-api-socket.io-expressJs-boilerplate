@@ -53,7 +53,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["joi", "npm:17.7.0"],\
             ["jwt-simple", "npm:0.5.6"],\
             ["lodash", "npm:4.17.21"],\
-            ["luxon", "npm:3.1.0"],\
+            ["luxon", "npm:3.2.1"],\
             ["method-override", "npm:3.0.0"],\
             ["mongoose", "npm:6.7.3"],\
             ["morgan", "npm:1.10.0"],\
@@ -7199,7 +7199,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["joi", "npm:17.7.0"],\
             ["jwt-simple", "npm:0.5.6"],\
             ["lodash", "npm:4.17.21"],\
-            ["luxon", "npm:3.1.0"],\
+            ["luxon", "npm:3.2.1"],\
             ["method-override", "npm:3.0.0"],\
             ["mongoose", "npm:6.7.3"],\
             ["morgan", "npm:1.10.0"],\
@@ -9389,10 +9389,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["luxon", [\
-        ["npm:3.1.0", {\
-          "packageLocation": "./.yarn/cache/luxon-npm-3.1.0-16e2508500-f8a850b759.zip/node_modules/luxon/",\
+        ["npm:3.2.1", {\
+          "packageLocation": "./.yarn/cache/luxon-npm-3.2.1-56f8d97395-3fa3def2c5.zip/node_modules/luxon/",\
           "packageDependencies": [\
-            ["luxon", "npm:3.1.0"]\
+            ["luxon", "npm:3.2.1"]\
           ],\
           "linkType": "HARD"\
         }]\
